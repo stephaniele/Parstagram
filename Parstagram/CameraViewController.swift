@@ -8,6 +8,7 @@
 
 import UIKit
 import AlamofireImage
+import Parse
 
 class CameraViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
@@ -49,6 +50,32 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
     }
     
     @IBAction func onSubmitButton(_ sender: Any) {
+        
+        // Parse created a table called "Posts"
+        let post = PFObject(className: "Posts")
+        
+        // Generates columns caption and author
+        post["caption"] = commentField.text!
+        post["author"] = PFUser.current()
+        
+        // Create an image url
+        // saves image as a PNG file
+        let imageData = imageView.image!.pngData()
+        let file = PFFileObject(data: imageData!)
+        
+        post["image"] = file
+        
+        
+        post.saveInBackground { (success, error) in
+            if success {
+                // dismiss this view after posting
+                self.dismiss(animated: true, completion: nil)
+                print("saved")
+            }
+            else {
+                print("error")
+            }
+        }
     }
     /*
     // MARK: - Navigation
