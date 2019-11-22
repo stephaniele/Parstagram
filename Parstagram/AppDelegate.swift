@@ -13,7 +13,6 @@ import Parse
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Initialize Parse
         // Set applicationId and server based on the values in the Heroku settings.
@@ -23,6 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 configuration.server = "https://aqueous-oasis-91105.herokuapp.com/parse"
             })
         )
+        
         return true
     }
 

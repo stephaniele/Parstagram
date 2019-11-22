@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -18,6 +19,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let _ = (scene as? UIWindowScene) else { return }
+        
+        // If user is already logged in, switch user to the feed instead of log in screen
+        if PFUser.current() != nil {
+            // save the storyboard we're tinkling with (Main.storyboard)
+            let main = UIStoryboard(name: "Main", bundle: nil)
+                 
+            // save the feed controller into a variable
+            let feedNavigationController = main.instantiateViewController(identifier: "FeedNavigationController")
+                 
+            // access and switch the view controller that the app window is displaying
+            window?.rootViewController = feedNavigationController
+        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
