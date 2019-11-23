@@ -19,6 +19,7 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     var showsCommentBar = false
     var posts = [PFObject]()
+    var selectedPost: PFObject!
     
     override var inputAccessoryView: UIView? {
         return commentBar
@@ -53,11 +54,31 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func messageInputBar(_ inputBar: MessageInputBar, didPressSendButtonWith text: String) {
         // Create the comment
+        let comment = PFObject(className: "Comments")
+        
+        comment["text"] = text
+        comment["post"] = selectedPost
+        comment["author"] = selectedPost["author"]
+
+        // make a new column containing comments for the post object
+        selectedPost.add(comment, forKey: "comments")
+
+        selectedPost.saveInBackground { (success, error) in
+            if success {
+                print("Comment saved")
+            }
+            else {
+                print("Error saving comment")
+            }
+        }
+        // reload tableview so that comments can be displayed after being posted
+        tableView.reloadData()
         
         // Clear and dismiss the input bar
         commentBar.inputTextView.text = nil
         showsCommentBar = false
         becomeFirstResponder()
+        commentBar.inputTextView.resignFirstResponder()
     }
     
      // hides keyboard when user drags keyboard down
@@ -92,7 +113,7 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         let post = posts[section]
         
-        let comments = (post["comment"] as? [PFObject]) ?? [] //whatever the thing on the left is, if it's nil, set it as []
+        let comments = (post["comments"] as? [PFObject]) ?? [] //whatever the thing on the left is, if it's nil, set it as []
         
         // return all the comments, a picture, and "add a comment" cell
         return comments.count + 2
@@ -105,7 +126,7 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
        
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let post = posts[indexPath.section]
-        let comments = (post["comment"] as? [PFObject]) ?? [] //whatever the thing on the left is, if it's nil, set it as []
+        let comments = (post["comments"] as? [PFObject]) ?? [] //whatever the thing on the left is, if it's nil, set it as []
         
         // code for PostCell, which is the cell at first index
         if indexPath.row == 0 {
@@ -138,6 +159,7 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
             
             return cell
         }
+        
             // code for AddCommentCell, which is the last cell (one more than indexPath.row)
         else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "AddCommentCell")!
@@ -162,7 +184,8 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     // what happens when user selects a cell
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let post = posts[indexPath.row]
+        let post = posts[indexPath.section]
+        selectedPost = post
         
         // make a new object (table) called Comments
         let comments = (post["comments"] as? [PFObject]) ?? []
@@ -172,22 +195,6 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
             becomeFirstResponder()
             commentBar.inputTextView.becomeFirstResponder()
         }
-        
-//        comment["text"] = "This is a comment"
-//        comment["post"] = post
-//        comment["author"] = PFUser.current()
-//
-//        // make a new column containing comments for the post object
-//        post.add(comment, forKey: "comments")
-//
-//        post.saveInBackground { (success, error) in
-//            if success {
-//                print("Comment saved")
-//            }
-//            else {
-//                print("Error saving comment")
-//            }
-//        }
         
     }
     
