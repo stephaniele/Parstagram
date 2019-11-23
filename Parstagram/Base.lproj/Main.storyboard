@@ -103,7 +103,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Thy" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K9L-wX-U9q">
-                                                    <rect key="frame" x="16" y="426" width="31" height="20.5"/>
+                                                    <rect key="frame" x="16" y="426" width="31" height="21"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -118,6 +118,7 @@
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="1ju-2y-Yyx" secondAttribute="trailing" constant="8" id="A0K-vb-u2J"/>
                                                 <constraint firstAttribute="trailing" secondItem="MDu-qm-J2k" secondAttribute="trailing" constant="8" id="Lft-v0-u7a"/>
+                                                <constraint firstAttribute="bottom" secondItem="K9L-wX-U9q" secondAttribute="bottom" constant="8" id="P9J-VK-cHR"/>
                                                 <constraint firstItem="K9L-wX-U9q" firstAttribute="leading" secondItem="0TV-Hn-jQ6" secondAttribute="leading" constant="16" id="T9A-ZB-RSH"/>
                                                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="1ju-2y-Yyx" secondAttribute="bottom" constant="8" id="gST-8m-NAi"/>
                                                 <constraint firstItem="MDu-qm-J2k" firstAttribute="top" secondItem="0TV-Hn-jQ6" secondAttribute="top" constant="8" id="nRq-My-fdp"/>
