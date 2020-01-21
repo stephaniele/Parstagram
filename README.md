@@ -6,12 +6,12 @@ Time spent: **20** hours spent in total
 
 ## User Stories
 
-The following **required** functionality is completed:
+The following functionalities are completed:
 
-- [x] User stays logged in across restarts. (1pt)
-- [x] User can log out. (1pt)
-- [x] User can view comments on a post. (3pts)
-- [x] User can add a new comment. (5pts)
+- [x] User stays logged in across restarts. 
+- [x] User can log out. 
+- [x] User can view comments on a post. 
+- [x] User can add a new comment.
 
 ## Video Walkthrough
 
